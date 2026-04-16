@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GCD Calculator | Euclidean Algorithm</title>
+    <style>
+        :root { --primary: #2563eb; --bg: #f8fafc; --text: #1e293b; }
+        body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); display: grid; place-items: center; min-height: 100vh; margin: 0; }
+        .container { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        h1 { margin-top: 0; font-size: 1.5rem; text-align: center; color: var(--primary); }
+        .input-group { margin-bottom: 1rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        input { width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-size: 1rem; }
+        button { width: 100%; padding: 0.75rem; background: var(--primary); color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; transition: opacity 0.2s; }
+        button:hover { opacity: 0.9; }
+        #result-display { margin-top: 1.5rem; padding: 1rem; border-radius: 6px; background: #eff6ff; font-weight: 600; text-align: center; min-height: 1.5rem; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>GCD Calculator</h1>
+    <div class="input-group">
+        <label for="numA">Number A</label>
+        <input type="number" id="numA" placeholder="Enter first number" step="1">
+    </div>
+    <div class="input-group">
+        <label for="numB">Number B</label>
+        <input type="number" id="numB" placeholder="Enter second number" step="1">
+    </div>
+    <button onclick="handleCalculate()">Calculate GCD</button>
+    <div id="result-display" aria-live="polite">Results will appear here</div>
+</div>
+
+<script>
+    /**
+     * Optimized Iterative Euclidean Algorithm
+     */
+    function getGCD(a, b) {
+        a = Math.abs(a);
+        b = Math.abs(b);
+        while (b !== 0) {
+            let temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+
+    /**
+     * UI Logic to handle input and display
+     */
+    function handleCalculate() {
+        const a = parseInt(document.getElementById('numA').value);
+        const b = parseInt(document.getElementById('numB').value);
+        const output = document.getElementById('result-display');
+
+        if (isNaN(a) || isNaN(b)) {
+            output.textContent = "Please enter valid integers.";
+            output.style.color = "#dc2626";
+            return;
+        }
+
+        const result = getGCD(a, b);
+        output.textContent = `The GCD of ${a} and ${b} is: ${result}`;
+        output.style.color = "#1e293b";
+    }
+</script>
+
+</body>
+</html>
